@@ -18,3 +18,5 @@ fx updates.
 
 Once you've started the development server, navigate to http://localhost:8011
 to read the task description and get started.
+
+ALL TASKS (DEVELOPMENT AND TESTING WAS PERFORMED ON AN UNIX BASED SYSTEM --> UBUNTU 18.04)
