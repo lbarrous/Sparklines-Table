@@ -4,10 +4,10 @@ import Store from "../store/Index";
 
 export default class Table extends Component {
   // Pass our store instance and the HTML element up to the parent Component
-  constructor() {
+  constructor(element = null) {
     super({
       Store,
-      element: null //We create the table in its own component
+      element: element //We create the table in its own component
     });
   }
 
@@ -18,9 +18,9 @@ export default class Table extends Component {
    */
   createTable() {
     const emptyTable = document.createElement("table");
-    emptyTable.setAttribute("id", "emptyTable"); // table id.
+    emptyTable.setAttribute("id", "currencyPairsTable"); // table id.
 
-    var tr = emptyTable.insertRow(-1);
+    const tr = emptyTable.insertRow(-1);
 
     arrHead.forEach((header, index) => {
       let th = document.createElement("th"); // the header object.
@@ -50,6 +50,7 @@ export default class Table extends Component {
       Sparkline.draw(sparks, currencyPair[typeOfCell]);
     } else if (typeOfCell === arrHead[0]) {
       cell.innerHTML = currencyPair.lastUpdate[typeOfCell].toUpperCase();
+
     } else {
       cell.innerHTML = currencyPair.lastUpdate[typeOfCell];
     }
@@ -85,7 +86,6 @@ export default class Table extends Component {
    * @returns {void}
    */
   render() {
-    let self = this;
-    self.fillTable();
+    this.fillTable();
   }
 }

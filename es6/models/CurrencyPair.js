@@ -3,7 +3,7 @@ import { UPDATE_FRECUENCY_IN_MS } from "../constants";
 export default class CurrencyPair {
   constructor(lastUpdate) {
     this.lastUpdate = lastUpdate;
-    this.midprices = new Array().fill((lastUpdate.bestAsk + lastUpdate.bestBid) / 2);
+    this.midprices = [(lastUpdate.bestAsk + lastUpdate.bestBid) / 2];
   }
 
   getLastUpdate() {
