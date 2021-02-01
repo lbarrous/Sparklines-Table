@@ -19,7 +19,7 @@ global.DEBUG = false;
 
 const url = "ws://localhost:8011/stomp";
 const client = Stomp.client(url);
-client.heartbeat.incoming = 5000;
+client.heartbeat.incoming = 1000;
 client.debug = function(msg) {
   if (global.DEBUG) {
     console.info(msg);

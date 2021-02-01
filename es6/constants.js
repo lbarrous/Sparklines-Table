@@ -24,6 +24,7 @@ const STORE_STATUS = Object.freeze({
   ACTION: Symbol("action")
 });
 
-const UPDATE_FRECUENCY_IN_MS = 3000;
+/* Assuming server send an stomp frame every second */
+const UPDATE_FRECUENCY_IN_MS = 1000;
 
 export { arrHead, STORE_STATUS, UPDATE_FRECUENCY_IN_MS, TABLE_HEADER_TRANSLATIONS };
