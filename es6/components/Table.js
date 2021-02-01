@@ -7,7 +7,7 @@ export default class Table extends Component {
   constructor() {
     super({
       Store,
-      element: document.querySelector(".js-items")
+      element: null //We create the table in its own component
     });
   }
 
@@ -30,55 +30,62 @@ export default class Table extends Component {
 
     const container = document.getElementById("container");
     container.appendChild(emptyTable); // add table to a container.
+    this.element = emptyTable; //Attach the table to element property
   }
 
   /**
-   * Fill table with values
+   * Format every cell of the row
+   *
+   * @returns {void}
+   */
+  formatCell(row, typeOfCell, currencyPair) {
+    let cell = row.insertCell();
+    cell.className = "currencyPair-item";
+
+    if (typeOfCell === arrHead[5]) {
+      const sparks = document.createElement(
+        `sparkLine-${currencyPair.lastUpdate.name}`
+      );
+      cell.appendChild(sparks);
+      Sparkline.draw(sparks, currencyPair[typeOfCell]);
+    } else if (typeOfCell === arrHead[0]) {
+      cell.innerHTML = currencyPair.lastUpdate[typeOfCell].toUpperCase();
+    } else {
+      cell.innerHTML = currencyPair.lastUpdate[typeOfCell];
+    }
+  }
+
+  /**
+   * Fill table with new values
    *
    * @returns {void}
    */
   fillTable() {
-    var table = document.getElementById("emptyTable");
+    const table = this.element;
+
+    //Redraw the table every time as sorting of elements
     while (table.rows.length > 1) {
       table.deleteRow(1);
     }
 
     Store.state.currencyPairs.forEach(currencyPair => {
       let row = table.insertRow(-1);
-      row.className = "order";
+      row.className = "currencyPair";
       row.id = currencyPair.lastUpdate.name;
-      const sparks = document.createElement(`sparkLine-${currencyPair.lastUpdate.name}`);
 
       for (const value of arrHead) {
-        let cell = row.insertCell();
-        cell.className = "order-item";
-
-        if(value === arrHead[5]) {
-            cell.appendChild(sparks);
-            Sparkline.draw(sparks, currencyPair[value]);
-        } else {
-            cell.innerHTML = currencyPair.lastUpdate[value];
-        }
-
+        this.formatCell(row, value, currencyPair);
       }
     });
   }
 
+  /**
+   * React to state changes and render the component's HTML
+   *
+   * @returns {void}
+   */
   render() {
     let self = this;
-
-    const emptyTable = document.createElement("table");
-    emptyTable.setAttribute("id", "emptyTable"); // table id.
-
-    var tr = emptyTable.insertRow(-1);
-
-    arrHead.forEach((header, index) => {
-      let th = document.createElement("th"); // the header object.
-      th.innerHTML = arrHead[index];
-      tr.appendChild(th);
-    });
-
-    const container = document.getElementById("container");
-    container.appendChild(emptyTable); // add table to a container.
+    self.fillTable();
   }
 }

@@ -1,0 +1,87 @@
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+/* Component level style */
+input[type="text"],
+input[type="text"]:focus {
+  border: none;
+  border-bottom: 3px solid #ddd;
+  border-radius: 0;
+  height: 70px;
+  font-size: 32px;
+  padding: 5px;
+}
+
+::placeholder {
+  /* Firefox, Chrome, Opera */
+  color: #ddd !important;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #ddd !important;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #ddd !important;
+}
+
+h1 {
+  font-size: 56px;
+  font-weight: 700;
+}
+
+th {
+  width: 20%;
+  cursor: pointer;
+}
+
+th:hover {
+  background-color: grey;
+}
+
+.currencyPair:hover {
+  background-color: grey !important;
+}
+
+td,
+th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4caf50;
+  color: white;
+}
+
+/* Very basic media queries */
+@media (max-width: 1200px) {
+  table {
+    font-size: 12px;
+    overflow: hidden;
+  }
+
+  h1 {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 600px) {
+  table {
+    font-size: 8px;
+  }
+}

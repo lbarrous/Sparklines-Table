@@ -1,5 +1,5 @@
 import CurrencyPair from "../models/CurrencyPair";
-import compare from "../utils/Sorter";
+import sortArray from "../utils/Sorter";
 
 export default {
   updateCurrencypair(state, payload) {
@@ -10,6 +10,7 @@ export default {
 
     if (existingCurrencyPair.length) {
       const newCurrencyPair = new CurrencyPair(payload);
+      /* Copy the midprices of the old currencyPair */
       newCurrencyPair.setMidPrices(existingCurrencyPair[0].midprices);
       newCurrencyPair.addMidPrice(
         (newCurrencyPair.lastUpdate.bestBid +
@@ -20,16 +21,20 @@ export default {
         currencyPair => currencyPair.lastUpdate.name === payload.name
       );
 
+      /* We change the desired currencyPair for the new one in the array if we already have it */
       newState = {
-        currencyPairs: [
+        currencyPairs: sortArray([
           ...state.currencyPairs.slice(0, existingCurrencypairIndex),
           newCurrencyPair,
           ...state.currencyPairs.slice(existingCurrencypairIndex + 1)
-        ].sort(compare)
+        ])
       };
     } else {
+      /* We just add the new currencypair if we don't have it */
       newState = {
-        currencyPairs: state.currencyPairs.concat([new CurrencyPair(payload)]).sort(compare)
+        currencyPairs: sortArray(
+          state.currencyPairs.concat([new CurrencyPair(payload)])
+        )
       };
     }
 

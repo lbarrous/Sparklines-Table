@@ -22,6 +22,11 @@ export default class CurrencyPair {
     this.midprices = midprices;
   }
 
+  /**
+     * Add midprice to the instance checking if it is necessary to override and existing one
+     *
+     * @returns {void}
+     */
   addMidPrice(midprice) {
     /*
     If we have less elements of midprices in the array than the maximum we just add them, otherwise

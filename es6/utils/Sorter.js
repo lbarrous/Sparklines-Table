@@ -1,11 +1,14 @@
 const compare = (a, b) => {
-  if (a.lastUpdate.lastChangeBid < b.lastUpdate.lastChangeBid) {
-    return -1;
-  }
-  if (a.lastUpdate.lastChangeBid > b.lastUpdate.lastChangeBid) {
-    return 1;
-  }
-  return 0;
+  return b.lastUpdate.lastChangeBid - a.lastUpdate.lastChangeBid;
 };
 
-export default compare;
+/**
+     * It sorts an array of elements using a custom comparing function
+     *
+     * @returns {array}
+     */
+const sortArray = array => {
+  return array.sort(compare);
+};
+
+export default sortArray;

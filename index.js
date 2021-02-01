@@ -8,6 +8,7 @@
 require("./site/index.html");
 // Apply the styles in style.css to the page.
 require("./site/style.css");
+require("./css/main.css");
 
 // if you want to use es6, you can do something like
 var index = require("./es6/index");
@@ -30,7 +31,7 @@ index.table.createTable();
 function subscribeCallback(message) {
   const currencyPair = JSON.parse(message.body);
   index.Store.dispatch('updateCurrencypair', currencyPair);
-  index.table.fillTable();
+  index.table.render();
 }
 
 function connectCallback() {
