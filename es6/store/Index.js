@@ -3,8 +3,10 @@ import mutations from './Mutations';
 import state from './State';
 import Store from './Store';
 
-export default new Store({
+const index = new Store({
     actions,
     mutations,
     state
 });
+
+export default index;

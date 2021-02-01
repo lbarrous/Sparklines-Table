@@ -1,51 +1,28 @@
 import { UPDATE_FRECUENCY_IN_MS } from "../constants";
 
 export default class CurrencyPair {
-  constructor(data) {
-    this.name = data.name;
-    this.bestBid = data.bestBid;
-    this.bestAsk = data.bestAsk;
-    this.lastChangeAsk = data.lastChangeAsk;
-    this.lastChangeBid = data.lastChangeBid;
-    this.midprices = new Array().fill((this.bestAsk + this.bestBid) / 2);
+  constructor(lastUpdate) {
+    this.lastUpdate = lastUpdate;
+    this.midprices = new Array().fill((lastUpdate.bestAsk + lastUpdate.bestBid) / 2);
   }
 
-  get name() {
-    return this.name;
-  }
-  get bestBid() {
-    return this.bestBid;
-  }
-  get bestAsk() {
-    return this.bestAsk;
-  }
-  get lastChangeAsk() {
-    return this.lastChangeAsk;
-  }
-  get lastChangeBid() {
-    return this.lastChangeBid;
+  getLastUpdate() {
+    return this.lastUpdate;
   }
 
-  set name(name) {
-    return (this.name = name);
-  }
-  set bestBid(bestBid) {
-    return (this.bestBid = bestBid);
-  }
-  set bestAsk(bestAsk) {
-    return (this.bestAsk = bestAsk);
-  }
-  set lastChangeAsk(lastChangeAsk) {
-    return (this.lastChangeAsk = lastChangeAsk);
-  }
-  set lastChangeBid(lastChangeBid) {
-    return (this.lastChangeBid = lastChangeBid);
-  }
-  set midPrices(midPrices) {
-    return (this.midPrices = midPrices);
+  setLastUpdate(lastUpdate) {
+    this.lastUpdate = lastUpdate;
   }
 
-  addMidPrice(midPrice) {
+  getMidPrices() {
+    return this.midprices;
+  }
+
+  setMidPrices(midprices) {
+    this.midprices = midprices;
+  }
+
+  addMidPrice(midprice) {
     /*
     If we have less elements of midprices in the array than the maximum we just add them, otherwise
     we just remove the oldest and add the new one.
@@ -53,7 +30,7 @@ export default class CurrencyPair {
     if (
       this.midprices.length < Math.floor(30 / (UPDATE_FRECUENCY_IN_MS / 1000))
     ) {
-      this.midprices = [...this.midprices, midPrice];
+      this.midprices = [...this.midprices, midprice];
     } else {
       this.midprices = [...this.midprices.slice(1), midprice];
     }

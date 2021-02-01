@@ -1,3 +1,6 @@
 import Table from "./components/Table";
+import Store from "./store/Index";
 
-module.exports.Table = Table;
+const table = new Table();
+
+export { table, Store }

@@ -1,31 +1,36 @@
 import CurrencyPair from "../models/CurrencyPair";
+import compare from "../utils/Sorter";
 
 export default {
   updateCurrencypair(state, payload) {
     let newState;
     const existingCurrencyPair = state.currencyPairs.filter(
-      currencyPair => currencyPair.name === payload.name
+      currencyPair => currencyPair.lastUpdate.name === payload.name
     );
 
     if (existingCurrencyPair.length) {
       const newCurrencyPair = new CurrencyPair(payload);
-      newCurrencyPair.midPrices = existingCurrencyPair.midPrices;
+      newCurrencyPair.setMidPrices(existingCurrencyPair[0].midprices);
       newCurrencyPair.addMidPrice(
-        (newCurrencyPair.bestBid + newCurrencyPair.bestAsk) / 2
+        (newCurrencyPair.lastUpdate.bestBid +
+          newCurrencyPair.lastUpdate.bestAsk) /
+          2
       );
       const existingCurrencypairIndex = state.currencyPairs.findIndex(
-        currencyPair => currencyPair.name === payload.name
+        currencyPair => currencyPair.lastUpdate.name === payload.name
       );
 
       newState = {
         currencyPairs: [
-          ...state.currencyPairs(0, existingCurrencypairIndex),
+          ...state.currencyPairs.slice(0, existingCurrencypairIndex),
           newCurrencyPair,
-          ...state.currencyPairs(existingCurrencypairIndex + 1)
-        ]
+          ...state.currencyPairs.slice(existingCurrencypairIndex + 1)
+        ].sort(compare)
       };
     } else {
-      newState = state.currencyPairs.concat([new CurrencyPair(payload)]);
+      newState = {
+        currencyPairs: state.currencyPairs.concat([new CurrencyPair(payload)]).sort(compare)
+      };
     }
 
     return newState;

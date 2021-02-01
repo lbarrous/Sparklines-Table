@@ -1,4 +1,4 @@
-import { arrHead } from "../constants";
+import { arrHead, TABLE_HEADER_TRANSLATIONS } from "../constants";
 import Component from "../core/Component";
 import Store from "../store/Index";
 
@@ -24,7 +24,7 @@ export default class Table extends Component {
 
     arrHead.forEach((header, index) => {
       let th = document.createElement("th"); // the header object.
-      th.innerHTML = arrHead[index];
+      th.innerHTML = TABLE_HEADER_TRANSLATIONS[arrHead[index]];
       tr.appendChild(th);
     });
 
@@ -39,15 +39,27 @@ export default class Table extends Component {
    */
   fillTable() {
     var table = document.getElementById("emptyTable");
+    while (table.rows.length > 1) {
+      table.deleteRow(1);
+    }
 
     Store.state.currencyPairs.forEach(currencyPair => {
-      let row = tbody.insertRow(-1);
+      let row = table.insertRow(-1);
       row.className = "order";
+      row.id = currencyPair.lastUpdate.name;
+      const sparks = document.createElement(`sparkLine-${currencyPair.lastUpdate.name}`);
 
       for (const value of arrHead) {
         let cell = row.insertCell();
         cell.className = "order-item";
-        cell.innerHTML = currencyPair.value;
+
+        if(value === arrHead[5]) {
+            cell.appendChild(sparks);
+            Sparkline.draw(sparks, currencyPair[value]);
+        } else {
+            cell.innerHTML = currencyPair.lastUpdate[value];
+        }
+
       }
     });
   }

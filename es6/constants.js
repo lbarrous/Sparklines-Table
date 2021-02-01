@@ -14,7 +14,7 @@ const TABLE_HEADER_TRANSLATIONS = Object.freeze({
   bestAsk: "Best ask price",
   lastChangeAsk: "Best bid price last changed",
   lastChangeBid: "Best ask price last changed",
-  midprices: ""
+  midprices: "Mid Price"
 });
 
 const STORE_STATUS = Object.freeze({
